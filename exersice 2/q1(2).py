@@ -1,40 +1,35 @@
 def find_divisors(number):
-    divisors = []
-    for i in range(1, number + 1):
-        if number % i == 0:
-            divisors.append(i)
-    return sum(divisors)
+    return sum(i for i in range(1, number + 1) if number % i == 0)
 
 def change_mabna(number, base):
-  res = ""
-  quotient = number
-  while quotient > 0:
-      remainder = quotient % base
-      res = str(remainder) + res
-      quotient = quotient // base
-  return int(res)
+    res = ""
+    quotient = number
+    while quotient > 0:
+        remainder = quotient % base
+        res = str(remainder) + res
+        quotient = quotient // base
+    return int(res)
 
-n = []
-b = []
-x = 0
-y = 0
-while(True):
-  
+def main():
+    n = []
+    b = []
 
-    x, y = input().split()
+    while True:
+        x, y = map(int, input("Enter x and y (space-separated, or -1 -1 to exit): ").split())
 
-    if int(x) == -1 and int(y) == -1:
-        break
-    if int(y) >= 2 and int(y) <= 9 and int(x) >= 1 and int(x) <= 1000:
-        n.append(int(x))
-        b.append(int(y))
-    else:
-        print("invalid base!")
-        exit(0)
-result = 0
-for i in range(len(n)):
-  divs = find_divisors(n[i])
-  mabna = change_mabna(divs, b[i])
+        if x == -1 and y == -1:
+            break
 
-  result = result + mabna
-print(result)
+        if 2 <= y <= 9 and 1 <= x <= 1000:
+            n.append(x)
+            b.append(y)
+        else:
+            print("Invalid base!")
+            exit(0)
+
+    result = sum(change_mabna(find_divisors(n[i]), b[i]) for i in range(len(n)))
+
+    print(result)
+
+if __name__ == "__main__":
+    main()
