@@ -11,25 +11,25 @@ class Kharchang:
 
 class BabEsfanji(Kharchang):
     def process_dna(self):
-        sorted22 = self.merge_sort(str(len(self.dna)))
+        sorted22 = self._merge_sort(str(len(self.dna)))
         sorted22 = "".join(sorted22)
         sorted22 = int(sorted22) + 100
-        return(sorted22)
+        return sorted22
 
-    def merge_sort(self, dna):
-         if len(dna) <= 1:
+    def _merge_sort(self, dna):
+        if len(dna) <= 1:
             return dna
 
-         mid = len(dna) // 2
-         left_half = dna[:mid]
-         right_half = dna[mid:]
+        mid = len(dna) // 2
+        left_half = dna[:mid]
+        right_half = dna[mid:]
 
-         left_half = self.merge_sort(left_half)
-         right_half = self.merge_sort(right_half)
+        left_half = self._merge_sort(left_half)
+        right_half = self._merge_sort(right_half)
 
-         return self.merge(left_half, right_half)
+        return self._merge(left_half, right_half)
 
-    def merge(self, left, right):
+    def _merge(self, left, right):
         result = []
         i = j = 0
 
@@ -43,7 +43,6 @@ class BabEsfanji(Kharchang):
 
         result.extend(left[i:])
         result.extend(right[j:])
-
         return result
 
 
@@ -71,29 +70,18 @@ class Akhtapos:
             result = self.dna
         return result
 
+
 def main():
     data = input().strip()
-    if data.startswith("m"):
-        character = Kharchang(data[0:])
-    elif data.startswith("sb"):
-        character = BabEsfanji(data[0:])
-    elif data.startswith("s") :
-        character = Akhtapos(data[0:])
-    elif data[len(data) - 1] == "m":
-        data = data[::-1]
-        character = Kharchang(data)
-    elif data[len(data) - 1] == "s" and data[len(data) - 2] == "b":
-        data = data[::-1]
-        character = BabEsfanji(data)
-    elif data[len(data) - 1] == "s" and data[len(data) - 2] != "b":
-        data = data[::-1]
-        character = Akhtapos(data)
-    else: 
-        print('invalid input')
-        return
-    
-    result = character.process_dna()
-    print(result)
 
-if __name__ == "__main__":
-    main()
+    character = None
+
+    if data.startswith("m"):
+        character = Kharchang(data[1:])
+    elif data.startswith("sb"):
+        character = BabEsfanji(data[2:])
+    elif data.startswith("s"):
+        character = Akhtapos(data[1:])
+    elif data.endswith("m"):
+        character = Kharchang(data[::-1][1:])
+    elif data.endswith("s") and data[-2] == "b":
