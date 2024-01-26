@@ -1,47 +1,46 @@
-number = int(input())
+def build_game_grid(number, cmds):
+    row_cnt = cmds.count("B")
+    game = [['.' for _ in range(number)] for _ in range(row_cnt + 1)]
+    game[0][0] = "*"
+    row, col = 0, 0
 
-cmds = []
+    for cmd in cmds:
+        if cmd == "R":
+            col += 1
+        elif cmd == "L" and col > 0:
+            col -= 1
+        elif cmd == "B":
+            row += 1
 
-while(True):
-  user_in = input()
+        # Check if the new position is within the grid
+        if 0 <= row <= row_cnt and 0 <= col < number:
+            # Mark the cell as visited by replacing '*' with '.'
+            game[row][col] = '*'
 
-  if user_in == 'END':
-    break
-  cmds.append(user_in)
+    return game
 
-row_cnt = cmds.count("B")
-game = [['.' for _ in range(number)] for _ in range(row_cnt + 1)]
+def print_game_grid(game):
+    for row in game:
+        for cell in row:
+            print(cell + " ", end="", sep="")
+        print()
 
-game[0][0] = "*"
+def main():
+    number = int(input("Enter the size of the grid: "))
 
-row = 0
-col = 0
+    cmds = []
+    while True:
+        user_in = input("Enter a command ('END' to finish): ")
 
-for cmd in cmds:
+        if user_in == 'END':
+            break
+        cmds.append(user_in)
 
-  if cmd == "R":
-    col = col + 1
-  
-  elif cmd == "L" and col > 0:
-    col -= 1
+    game = build_game_grid(number, cmds)
+    print_game_grid(game)
 
-  elif cmd == "B":
-    row += 1
+    if game[-1][-1] == '.':
+        print("There's no way out!")
 
-  # print(row, col)
-
-  # Check if the new position is within the grid
-  if 0 <= row <= row_cnt and 0 <= col < number:
-      # Mark the cell as visited by replacing '*' with '.'
-      game[row][col] = '*'
-
-
-
-for i in range(row_cnt + 1):
-    for j in range(number):
-       
-      print(game[i][j] + " ", end="",sep="")
-    print()
-
-if game[row_cnt][-1] == '.':
-   print("There's no way out!")
+if __name__ == "__main__":
+    main()
