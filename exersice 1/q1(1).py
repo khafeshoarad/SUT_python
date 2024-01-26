@@ -1,19 +1,33 @@
-y = int(input())
-x = int(input())
-y=bin(y)
-x=bin(x)
-x = x[2:]
-y = y[2:]
+def get_binary_input():
+    return bin(int(input()))[2:]
 
-dif = abs(len(x)-len(y))
-for _ in range(dif):
-  if len(y) < len(x):
-    y = '0'+y
-  else:
-    x = '0'+x
-cnt = 0
-for i in range(len(x)):
-  if (int(x[i]) ^ int(y[i])) == 1:
-    cnt = 1 + cnt
+def calculate_difference_and_pad(binary1, binary2):
+    diff = abs(len(binary1) - len(binary2))
+    
+    for _ in range(diff):
+        if len(binary2) < len(binary1):
+            binary2 = '0' + binary2
+        else:
+            binary1 = '0' + binary1
+    
+    return binary1, binary2
 
-print(cnt)
+def count_different_bits(binary1, binary2):
+    count = 0
+    for i in range(len(binary1)):
+        if int(binary1[i]) ^ int(binary2[i]) == 1:
+            count += 1
+    return count
+
+def main():
+    y = get_binary_input()
+    x = get_binary_input()
+
+    y, x = calculate_difference_and_pad(y, x)
+
+    diff_count = count_different_bits(x, y)
+
+    print(diff_count)
+
+if __name__ == "__main__":
+    main()
