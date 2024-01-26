@@ -1,17 +1,22 @@
-#this program is just a piece of cake
-z = int(input())
-gholam = int(input())
-ghodrat = int(input())
-def mf(y,x):
-    while x != 0:
-        carryover = y & x
-        y = y ^ x
-        x = carryover << 1
-    return y
-seyed = mf(z,gholam)
-#cake is not real(vagei)
-print(seyed)
-if seyed == ghodrat :
-    print('YES')
-else :
-    print('NO')
+def calculate_gcd(a, b):
+    while b != 0:
+        carryover = a & b
+        a, b = a ^ b, carryover << 1
+    return a
+
+def main():
+    z = int(input("Enter the first number: "))
+    gholam = int(input("Enter the second number: "))
+    ghodrat = int(input("Enter the third number: "))
+
+    gcd_result = calculate_gcd(z, gholam)
+
+    print("GCD:", gcd_result)
+
+    if gcd_result == ghodrat:
+        print('YES')
+    else:
+        print('NO')
+
+if __name__ == "__main__":
+    main()
