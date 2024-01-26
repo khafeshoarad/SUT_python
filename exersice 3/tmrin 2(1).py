@@ -1,13 +1,19 @@
-number = int(input())
-emails= []
-for i in range(number):
-    emails.append(input())
+def get_unique_domains(emails):
+    domains = set()
+    for email in emails:
+        at_index = email.find('@')
+        if at_index != -1:
+            domains.add(email[at_index + 1:])
+    return sorted(domains)
 
-domain= []
-for email in emails:
-    for i in range(len(email)):
-        if email[i] == '@':
-            domain.append(email[i+1:])
-res = sorted(set(domain))
-for i in res:
-    print(i)            
+def main():
+    number = int(input("Enter the number of emails: "))
+    emails = [input("Enter email: ") for _ in range(number)]
+
+    unique_domains = get_unique_domains(emails)
+
+    for domain in unique_domains:
+        print(domain)
+
+if __name__ == "__main__":
+    main()
